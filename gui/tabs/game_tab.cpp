@@ -8,23 +8,23 @@
 
 namespace GameTab {
 	void Render() {
-		if (ImGui::BeginTabItem("Game")) {
+		if (ImGui::BeginTabItem(u8"游戏")) {
 			ImGui::Dummy(ImVec2(4, 4));
-			if (SteppedSliderFloat("Player Speed", &State.PlayerSpeed, 0.5f, 3.f, 0.25f, "%.2fx", ImGuiSliderFlags_Logarithmic | ImGuiSliderFlags_NoInput)) {
+			if (SteppedSliderFloat(u8"玩家速度", &State.PlayerSpeed, 0.5f, 3.f, 0.25f, "%.2fx", ImGuiSliderFlags_Logarithmic | ImGuiSliderFlags_NoInput)) {
 				if (!IsInGame()) State.PlayerSpeed = State.PrevPlayerSpeed;
 				else {
 					(*Game::pGameOptionsData)->fields.PlayerSpeedMod = State.PlayerSpeed;
 					State.PrevPlayerSpeed = State.PlayerSpeed;
 				}
 			}
-			if (CustomListBoxInt("Kill Distance", &State.KillDistance, KILL_DISTANCE)) {
+			if (CustomListBoxInt(u8"击杀距离", &State.KillDistance, KILL_DISTANCE)) {
 				if (!IsInGame()) State.KillDistance = State.PrevKillDistance;
 				else {
 					(*Game::pGameOptionsData)->fields.KillDistance = State.KillDistance;
 					State.PrevKillDistance = State.KillDistance;
 				}
 			}
-			if (CustomListBoxInt("Task Bar Updates", &State.TaskBarUpdates, TASKBARUPDATES)) {
+			if (CustomListBoxInt(u8"任务状态更新", &State.TaskBarUpdates, TASKBARUPDATES)) {
 				if (!IsInGame()) State.TaskBarUpdates = State.PrevTaskBarUpdates;
 				else {
 					(*Game::pGameOptionsData)->fields.TaskBarUpdates = (TaskBarUpdates__Enum)State.TaskBarUpdates;
@@ -36,7 +36,7 @@ namespace GameTab {
 			ImGui::Separator();
 			ImGui::Dummy(ImVec2(7, 7));
 			
-			if (ImGui::Button("Set Color") && !State.AntiBan && IsInGame())
+			if (ImGui::Button(u8"设置角色颜色") && !State.AntiBan && IsInGame())
 			{
 				bool colorAvailable = true;
 
@@ -54,10 +54,10 @@ namespace GameTab {
 			}
 
 			ImGui::SameLine(87);
-			CustomListBoxInt(" ", &State.SelectedColorId, COLORS, 85.0f);
+			CustomListBoxInt(u8" ", &State.SelectedColorId, COLORS, 85.0f);
 
 			ImGui::SameLine(215);
-			if (ImGui::Button("Random Color"))
+			if (ImGui::Button(u8"随机角色颜色"))
 			{
 				if (IsInGame() || IsInLobby())
 				{
@@ -87,14 +87,14 @@ namespace GameTab {
 				}
 			}
 
-			if (ImGui::Checkbox("Anti Kick/Ban", &State.AntiBan))
+			if (ImGui::Checkbox(u8"防踢/防封", &State.AntiBan))
 			{
 				if (IsInLobby() || IsInGame())
 				{
 					State.AntiBan = !State.AntiBan;
 				}
 			}
-			if (ImGui::Checkbox("Console", &State.ShowConsole)) {
+			if (ImGui::Checkbox(u8"控制台", &State.ShowConsole)) {
 				State.Save();
 			}
 

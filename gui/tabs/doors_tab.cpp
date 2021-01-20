@@ -9,9 +9,9 @@
 namespace DoorsTab {
 	void Render() {
 		if (IsInGame() && !State.mapDoors.empty()) {
-			if (ImGui::BeginTabItem("Doors")) {
+			if (ImGui::BeginTabItem(u8"门")) {
 				ImGui::BeginChild("doors#list", ImVec2(200, 0), true);
-				ImGui::ListBoxHeader("", ImVec2(200, 150));
+				ImGui::ListBoxHeader(u8"", ImVec2(200, 150));
 				for (size_t i = 0; i < State.mapDoors.size(); i++) {
 					auto systemType = State.mapDoors[i];
 					if (systemType == SystemTypes__Enum_Decontamination || systemType == SystemTypes__Enum_Decontamination2) continue;
@@ -42,7 +42,7 @@ namespace DoorsTab {
 				ImGui::SameLine();
 				ImGui::BeginChild("doors#options", ImVec2(200, 0));
 
-				if (ImGui::Button("Close All Doors"))
+				if (ImGui::Button(u8"关闭所有的门"))
 				{
 					for(auto door : State.mapDoors)
 					{
@@ -54,7 +54,7 @@ namespace DoorsTab {
 					State.Save();
 				}
 
-				if (ImGui::Button("Close Room Door"))
+				if (ImGui::Button(u8"关闭房间门"))
 				{
 					State.rpcQueue.push(new RpcCloseDoorsOfType(GetSystemTypes(GetTrueAdjustedPosition(*Game::pLocalPlayer)), false));
 				}
@@ -63,7 +63,7 @@ namespace DoorsTab {
 					State.Save();
 				}
 
-				if (ImGui::Button("Pin All Doors"))
+				if (ImGui::Button(u8"锁上所有的门"))
 				{
 					for (auto door : State.mapDoors)
 					{
@@ -74,7 +74,7 @@ namespace DoorsTab {
 						}
 					}
 				}
-				if (ImGui::Button("Unpin All Doors"))
+				if (ImGui::Button(u8"解锁所有的门"))
 				{
 					State.pinnedDoors.clear();
 				}
@@ -82,17 +82,17 @@ namespace DoorsTab {
 				if (State.selectedDoor != SystemTypes__Enum_Hallway) {
 					auto plainDoor = GetPlainDoorByRoom(State.selectedDoor);
 
-					if (ImGui::Button("Close Door")) {
+					if (ImGui::Button(u8"关门")) {
 						State.rpcQueue.push(new RpcCloseDoorsOfType(State.selectedDoor, false));
 					}
 
 					if (std::find(State.pinnedDoors.begin(), State.pinnedDoors.end(), State.selectedDoor) == State.pinnedDoors.end()) {
-						if (ImGui::Button("Pin Door")) {
+						if (ImGui::Button(u8"锁门")) {
 							State.rpcQueue.push(new RpcCloseDoorsOfType(State.selectedDoor, true));
 						}
 					}
 					else {
-						if (ImGui::Button("Unpin Door")) {
+						if (ImGui::Button(u8"解锁门")) {
 							State.pinnedDoors.erase(std::remove(State.pinnedDoors.begin(), State.pinnedDoors.end(), State.selectedDoor), State.pinnedDoors.end());
 						}
 					}

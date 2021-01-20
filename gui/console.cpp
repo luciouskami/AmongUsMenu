@@ -17,11 +17,11 @@ namespace ConsoleGui {
 		if (!init)
 			ConsoleGui::Init();
 
-		ImGui::Begin("Console", &State.ShowConsole, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoScrollbar);
+		ImGui::Begin(u8"控制台", &State.ShowConsole, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoScrollbar);
 		ImGui::BeginChild("console#filter", ImVec2(490, 20), true);
-		ImGui::Text("Filter\t");
+		ImGui::Text(u8"过滤器\t");
 		ImGui::SameLine();
-		CustomListBoxInt("By Type", &ConsoleGui::selectedType, ConsoleGui::BY_TYPE, 100.f);
+		CustomListBoxInt(u8"使用 类型", &ConsoleGui::selectedType, ConsoleGui::BY_TYPE, 100.f);
 		ImGui::EndChild();
 		ImGui::Separator();
 		ImGui::BeginChild("console#scroll", ImVec2(490, 225), true);

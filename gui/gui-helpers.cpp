@@ -66,7 +66,7 @@ bool HotKey(uint8_t& key)
 	if (!ImGui::IsItemHovered())
 		return false;
 
-	ImGui::SetTooltip("Press any key to change the keybind, ESC to reset");
+	ImGui::SetTooltip(u8"按下任意一个按键改变已经绑定的按键, 按下ESC以重置绑定");
 	for (uint8_t vKey : KeyBinds::GetValidKeys()) {
 		if (KeyBinds::IsKeyDown(vKey)) {
 			key = (vKey != VK_ESCAPE ? vKey : 0x00);

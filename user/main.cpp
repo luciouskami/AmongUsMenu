@@ -35,17 +35,18 @@ bool GameVersionCheck() {
 	auto steamApi = modulePath.parent_path() / "Among Us_Data" / "Plugins" / "x86" / "steam_api.dll";
 
 	if (!IsWindows10OrGreater()) {
-		MessageBox(NULL, L"This version of Windows is not supported!", L"AmongUsMenu", MB_OK | MB_ICONERROR | MB_SYSTEMMODAL);
+		MessageBox(NULL, L"Windows系统版本过低，不被支持，请升级到Windows10系统", L"AmongUsMenu", MB_OK | MB_ICONERROR | MB_SYSTEMMODAL);
 		return false;
 	}
 
 	if (!std::filesystem::exists(gameAssembly)) {
-		MessageBox(NULL, L"Unable to locate GameAssembly.dll", L"AmongUsMenu", MB_OK | MB_ICONERROR | MB_SYSTEMMODAL);
+		MessageBox(NULL, L"无法找到 GameAssembly.dll", L"AmongUsMenu", MB_OK | MB_ICONERROR | MB_SYSTEMMODAL);
 		return false;
 	}
 
-	if (GetCRC32(gameAssembly) != "1bd6e116") {
-		MessageBox(NULL, L"GameAssembly.dll is either not the right version or corrupted", L"AmongUsMenu", MB_OK | MB_ICONERROR | MB_SYSTEMMODAL);
+	if (GetCRC32(gameAssembly) != "1bd6e116" && GetCRC32(gameAssembly) != "c54657d1") {
+		MessageBoxA(NULL, GetCRC32(gameAssembly).c_str(), "AmongUsMenu", MB_OK | MB_ICONERROR | MB_SYSTEMMODAL);
+		MessageBox(NULL, L"GameAssembly.dll版本不正确或已经被损坏", L"AmongUsMenu", MB_OK | MB_ICONERROR | MB_SYSTEMMODAL);
 		return false;
 	}
 

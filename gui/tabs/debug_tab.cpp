@@ -7,7 +7,7 @@
 namespace DebugTab {
 
 	void Render() {
-		if (ImGui::BeginTabItem("Debug")) {
+		if (ImGui::BeginTabItem(u8"测试")) {
 			ImGui::Dummy(ImVec2(4, 4));
 #ifndef _VERSION
 			if (ImGui::Button("Unload DLL"))
@@ -16,11 +16,11 @@ namespace DebugTab {
 			}
 			ImGui::Dummy(ImVec2(4, 4));
 #endif
-			if (ImGui::Button("Force Load Settings"))
+			if (ImGui::Button(u8"强制导入设置"))
 			{
 				State.Load();
 			}
-			if (ImGui::Button("Force Save Settings"))
+			if (ImGui::Button(u8"强制保存设置"))
 			{
 				State.Save();
 			}

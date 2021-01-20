@@ -67,9 +67,9 @@ namespace Radar {
 		ImGui::SetNextWindowSize(ImVec2((float)maps[MapType].mapImage.imageWidth * 0.5F + 10, (float)maps[MapType].mapImage.imageHeight * 0.5F + 10), ImGuiCond_None);
 
 		if(State.LockRadar)
-			ImGui::Begin("Radar", &State.ShowRadar, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove);
+			ImGui::Begin(u8"À×´ï", &State.ShowRadar, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove);
 		else
-			ImGui::Begin("Radar", &State.ShowRadar, ImGuiWindowFlags_NoDecoration);
+			ImGui::Begin(u8"À×´ï", &State.ShowRadar, ImGuiWindowFlags_NoDecoration);
 
 		ImDrawList* drawList = ImGui::GetWindowDrawList();
 

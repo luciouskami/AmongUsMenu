@@ -8,10 +8,10 @@
 namespace HostTab {
 	void Render() {
 		if (IsHost() && IsInLobby()) {
-			if (ImGui::BeginTabItem("Host")) {
-				ImGui::Text("Select Impostors:");
+			if (ImGui::BeginTabItem(u8"主机")) {
+				ImGui::Text(u8"挑选内鬼们:");
 				ImGui::BeginChild("host#list", ImVec2(200, 0), true);
-				ImGui::ListBoxHeader("Choose Impostors", ImVec2(200, 150));
+				ImGui::ListBoxHeader(u8"选择内鬼们", ImVec2(200, 150));
 				for (auto playerData : GetAllPlayerData()) {
 					if (playerData->fields.Disconnected) continue;
 
@@ -57,7 +57,7 @@ namespace HostTab {
 					ImGui::SameLine();
 					ImGui::Dummy(ImVec2(0, 0));
 					ImGui::SameLine();
-
+					//TODO: to utf-8
 					ImGui::TextColored(AmongUsColorToImVec4(GetPlayerColor(playerData->fields.ColorId)),playerName.c_str());
 				}
 				ImGui::ListBoxFooter();
@@ -66,10 +66,10 @@ namespace HostTab {
 				ImGui::BeginChild("host#actions", ImVec2(200, 0), true);
 				State.impostors_amount = std::clamp(State.impostors_amount, 0, 2);
 				State.map = std::clamp(State.map, 0, 3);
-				if (CustomListBoxInt("Impostors", &State.impostors_amount, IMPOSTOR_AMOUNTS, 75)) {
+				if (CustomListBoxInt(u8"内鬼们", &State.impostors_amount, IMPOSTOR_AMOUNTS, 75)) {
 					if (!IsInGame()) (*Game::pGameOptionsData)->fields.NumImpostors = (State.impostors_amount + 1);
 				}
-				if (CustomListBoxInt("Map", &State.map, MAP_NAMES, 75)) {
+				if (CustomListBoxInt(u8"地图", &State.map, MAP_NAMES, 75)) {
 					if (!IsInGame()) {
 						if (State.map == 3) {
 							(*Game::pGameOptionsData)->fields.MapId = 0;

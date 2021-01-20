@@ -62,6 +62,9 @@ bool ImGuiInitialization(IDXGISwapChain* pSwapChain) {
 
         ImGui::CreateContext();
         ImGuiIO& io = ImGui::GetIO();
+        //Set Chinese font
+        io.Fonts->AddFontFromFileTTF("C:/Windows/Fonts/msyh.ttf", 13.0f, \
+            NULL, io.Fonts->GetGlyphRangesChineseSimplifiedCommon());
         io.ConfigFlags = ImGuiConfigFlags_NoMouseCursorChange;
         ImGui_ImplWin32_Init(window);
         ImGui_ImplDX11_Init(pDevice, pContext);
@@ -91,11 +94,12 @@ HRESULT __stdcall dPresent(IDXGISwapChain* __this, UINT SyncInterval, UINT Flags
     WaitForSingleObject(hPresentMutex, 0); //We're claiming ownership, but we'll be damned if we're going to wait
 
     il2cpp_gc_disable();
-
     ImGui_ImplDX11_NewFrame();
     ImGui_ImplWin32_NewFrame();
     ImGui::NewFrame();
+    
     ApplyTheme();
+    
 
     if (State.ShowMenu) {
         Menu::Render();

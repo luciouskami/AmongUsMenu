@@ -7,12 +7,12 @@
 namespace TasksTab {
 	void Render() {
 		if (IsInGame() && GetPlayerData(*Game::pLocalPlayer)->fields.Tasks != NULL) {
-			if (ImGui::BeginTabItem("Tasks")) {
+			if (ImGui::BeginTabItem(u8"任务")) {
 				ImGui::Dummy(ImVec2(4, 4));
 				if (!GetPlayerData(*Game::pLocalPlayer)->fields.IsImpostor) {
 					auto tasks = GetNormalPlayerTasks(*Game::pLocalPlayer);
 
-					if (ImGui::Button("Complete All Tasks")) {
+					if (ImGui::Button(u8"完成所有任务")) {
 						for (auto task : tasks) {
 							if (task->fields.taskStep != task->fields.MaxStep)
 								State.rpcQueue.push(new RpcCompleteTask(task->fields._._Id_k__BackingField));
@@ -39,22 +39,22 @@ namespace TasksTab {
 					ImGui::Dummy(ImVec2(7, 7));
 				}
 
-				if (ImGui::Button("Play Shields Animation"))
+				if (ImGui::Button(u8"玩护盾任务"))
 				{
 					State.rpcQueue.push(new RpcPlayAnimation(1));
 				}
 
-				if (ImGui::Button("Play Weapons Animation"))
+				if (ImGui::Button(u8"玩清理小行星任务"))
 				{
 					State.rpcQueue.push(new RpcPlayAnimation(6));
 				}
 
-				if(ImGui::Button("Play Trash Animation"))
+				if(ImGui::Button(u8"玩清理垃圾任务"))
 				{
 					State.rpcQueue.push(new RpcPlayAnimation(10));
 				}
 
-				if (ImGui::Checkbox("Play Medbay Scan Animation", &State.PlayMedbayScan))
+				if (ImGui::Checkbox(u8"玩身体扫描任务(金水)", &State.PlayMedbayScan))
 				{
 					if (State.PlayMedbayScan)
 					{

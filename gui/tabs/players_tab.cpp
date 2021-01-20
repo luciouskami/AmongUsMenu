@@ -11,9 +11,9 @@ namespace PlayersTab {
 
 	void Render() {
 		if (IsInGame()) {
-			if (ImGui::BeginTabItem("Players")) {
+			if (ImGui::BeginTabItem(u8"玩家们")) {
 				ImGui::BeginChild("players#list", ImVec2(200, 0), true);
-				ImGui::ListBoxHeader("", ImVec2(200, 150));
+				ImGui::ListBoxHeader(u8"", ImVec2(200, 150));
 				for (auto playerData : GetAllPlayerData()) {
 					if (playerData->fields.Disconnected) continue;
 
@@ -44,7 +44,7 @@ namespace PlayersTab {
 
 				if (IsInMultiplayerGame()) {
 					float taskPercentage = (float) (*Game::pGameData)->fields.CompletedTasks / (float) (*Game::pGameData)->fields.TotalTasks;
-					ImGui::TextColored(ImVec4(1.0f - taskPercentage, 1.0f, 1.0f - taskPercentage, 1.0f), "%.1f%% Total Tasks Completed", taskPercentage * 100);
+					ImGui::TextColored(ImVec4(1.0f - taskPercentage, 1.0f, 1.0f - taskPercentage, 1.0f), u8"%.1f%% 总任务完成进度", taskPercentage * 100);
 				}
 
 				ImGui::EndChild();
@@ -52,7 +52,7 @@ namespace PlayersTab {
 				ImGui::BeginChild("players#actions", ImVec2(200, 0), true);
 
 				if (!GetPlayerData(*Game::pLocalPlayer)->fields.IsDead) { //Player selection doesn't matter
-					if (ImGui::Button("Call Meeting")) {
+					if (ImGui::Button(u8"召集会议(远程)")) {
 						State.rpcQueue.push(new RpcReportPlayer(PlayerSelection()));
 					}
 				}
@@ -61,7 +61,7 @@ namespace PlayersTab {
 				{
 					if (!GetPlayerData(*Game::pLocalPlayer)->fields.IsDead) {
 						ImGui::NewLine();
-						if (ImGui::Button("Report Body")) {
+						if (ImGui::Button(u8"报告遗体")) {
 							State.rpcQueue.push(new RpcReportPlayer(State.selectedPlayer));
 						}
 					}
@@ -69,18 +69,18 @@ namespace PlayersTab {
 					if (!State.selectedPlayer.is_Disconnected() && !State.selectedPlayer.is_LocalPlayer())
 					{
 						if (State.playerToFollow.equals(State.selectedPlayer)) {
-							if (ImGui::Button("Stop Spectating")) {
+							if (ImGui::Button(u8"停止观看")) {
 								State.playerToFollow = PlayerSelection();
 							}
 						} else {
-							if (ImGui::Button("Spectate")) {
+							if (ImGui::Button(u8"观看")) {
 								State.FreeCam = false;
 								State.playerToFollow = State.selectedPlayer;
 							}
 						}
 					}
 
-					if (!State.selectedPlayer.is_LocalPlayer() && (!State.AntiBan || !IsInMultiplayerGame()) && ImGui::Button("Steal Name"))
+					if (!State.selectedPlayer.is_LocalPlayer() && (!State.AntiBan || !IsInMultiplayerGame()) && ImGui::Button(u8"偷取名字"))
 					{
 						if(convert_from_string(State.selectedPlayer.get_PlayerData()->fields.PlayerName).length() < 10)
 							State.rpcQueue.push(new RpcSetName(convert_from_string(State.selectedPlayer.get_PlayerData()->fields.PlayerName) + " "));
@@ -91,7 +91,7 @@ namespace PlayersTab {
 					if (GetPlayerData(*Game::pLocalPlayer)->fields.IsImpostor && !State.selectedPlayer.get_PlayerData()->fields.IsDead
 						&& !GetPlayerData(*Game::pLocalPlayer)->fields.IsDead && ((*Game::pLocalPlayer)->fields.killTimer <= 0.0f))
 					{
-						if (ImGui::Button("Kill Player"))
+						if (ImGui::Button(u8"杀死玩家"))
 						{
 							previousPlayerPosition = GetTrueAdjustedPosition(*Game::pLocalPlayer);
 							State.rpcQueue.push(new RpcMurderPlayer(State.selectedPlayer));
@@ -107,7 +107,7 @@ namespace PlayersTab {
 					else framesPassed--;
 
 					if (!State.selectedPlayer.is_LocalPlayer()) {
-						if (ImGui::Button("Teleport To")) {
+						if (ImGui::Button(u8"切换至")) {
 							State.rpcQueue.push(new RpcSnapTo(GetTrueAdjustedPosition(State.selectedPlayer.get_PlayerControl())));
 						}
 					}
@@ -120,18 +120,18 @@ namespace PlayersTab {
 
 						if (State.RevealImpostors && State.selectedPlayer.get_PlayerData()->fields.IsImpostor)
 						{
-							ImGui::TextColored(ImVec4(0.8F, 0.2F, 0.0F, 1.0F), "Fake Tasks:");
+							ImGui::TextColored(ImVec4(0.8F, 0.2F, 0.0F, 1.0F), u8"虚假任务:");
 						}
 						else
 						{
-							ImGui::Text("Tasks:");
+							ImGui::Text(u8"任务:");
 						}
 
-						ImGui::ListBoxHeader("", ImVec2(181, 94));
+						ImGui::ListBoxHeader(u8"", ImVec2(181, 94));
 
 						if (State.selectedPlayer.get_PlayerControl()->fields.myTasks == NULL)
 						{
-							ImGui::Text("ERROR: Could not load tasks.");
+							ImGui::Text(u8"错误: 无法载入任务。");
 						}
 						else
 						{

@@ -6,9 +6,9 @@
 
 namespace RadarTab {
 	void Render() {
-		if (ImGui::BeginTabItem("Radar")) {
+		if (ImGui::BeginTabItem(u8"雷达")) {
 			ImGui::Dummy(ImVec2(4, 4));
-			if (ImGui::Checkbox("Show Radar", &State.ShowRadar)) {
+			if (ImGui::Checkbox(u8"显示雷达", &State.ShowRadar)) {
 				State.Save();
 			}
 			ImGui::SameLine();
@@ -20,13 +20,13 @@ namespace RadarTab {
 			ImGui::Separator();
 			ImGui::Dummy(ImVec2(7, 7));
 
-			if (ImGui::Checkbox("Show Dead Bodies", &State.ShowRadar_DeadBodies)) {
+			if (ImGui::Checkbox(u8"显示遗体", &State.ShowRadar_DeadBodies)) {
 				State.Save();
 			}
-			if (ImGui::Checkbox("Show Ghosts", &State.ShowRadar_Ghosts)) {
+			if (ImGui::Checkbox(u8"显示鬼魂", &State.ShowRadar_Ghosts)) {
 				State.Save();
 			}
-			if (ImGui::Checkbox("Right Click to Teleport", &State.ShowRadar_RightClick_Teleport)) {
+			if (ImGui::Checkbox(u8"按下右键切换至", &State.ShowRadar_RightClick_Teleport)) {
 				State.Save();
 			}
 
@@ -34,13 +34,13 @@ namespace RadarTab {
 			ImGui::Separator();
 			ImGui::Dummy(ImVec2(7, 7));
 
-			if (ImGui::Checkbox("Hide Radar During Meetings", &State.HideRadar_During_Meetings)) {
+			if (ImGui::Checkbox(u8"在会议时隐藏雷达", &State.HideRadar_During_Meetings)) {
 				State.Save();
 			}
-			if (ImGui::Checkbox("Lock Radar Position", &State.LockRadar)) {
+			if (ImGui::Checkbox(u8"固定雷达位置", &State.LockRadar)) {
 				State.Save();
 			}
-			if (ImGui::ColorEdit4("Radar Color", (float*)&State.SelectedColor, ImGuiColorEditFlags__OptionsDefault | ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_AlphaPreview)) {
+			if (ImGui::ColorEdit4(u8"雷达颜色", (float*)&State.SelectedColor, ImGuiColorEditFlags__OptionsDefault | ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_AlphaPreview)) {
 				State.Save();
 			}
 
